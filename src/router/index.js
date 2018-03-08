@@ -72,6 +72,12 @@ const router =  new Router({
       component: Custom,
       props: true,
     },
+    {
+      path: '*',
+      redirect: {
+        name: 'CharList'
+      }
+    }
   ]
 })
 
