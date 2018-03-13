@@ -52,6 +52,8 @@ export const editableMixin = {
             target: this.target
           };
 
+
+
           if (this.selfEditable) { // SelfEditable
             if (this.key) {
               db.ref(changes.target).child(this.key).update(changes.new)
@@ -67,8 +69,6 @@ export const editableMixin = {
             toastr.success("Changes submitted.");
             changesRef.push(changes);
             this.currentData = this.oldData;
-
-            //TODO USER & DATE
           }
         }
       }

@@ -11,6 +11,7 @@ import PendingList from '@/components/PendingList'
 import Login from '@/components/Login'
 import Account from '@/components/Account'
 import Custom from '@/components/Custom'
+import Home from '@/components/Home'
 
 Vue.use(Router)
 
@@ -28,10 +29,14 @@ const router =  new Router({
       props: true
     },
     {
-      path: '/',
-      alias: '/chars',
+      path: '/chars',
       name: 'CharList',
       component: CharList
+    },
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
     },
     {
       path: '/char/:name',
@@ -67,7 +72,7 @@ const router =  new Router({
       props: true,
     },
     {
-      path: '/custom/:type/:id',
+      path: '/custom/:type/:id/:targetChar?',
       name: 'Custom',
       component: Custom,
       props: true,

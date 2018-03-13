@@ -49,7 +49,7 @@
             <div class="form-group">
                 <label for="customChar" class="col-sm-2 control-label">Char</label>
                 <div class="col-sm-5">
-                    <select id="customChar" class="form-control" v-model="currentData.char">
+                    <select :disabled="type === 'roster'" id="customChar" class="form-control" v-model="currentData.char">
                         <option v-for="c in chars" :value="c.name" :key="c['.key']">{{c.name}}</option>
                     </select>
                 </div>
@@ -206,7 +206,7 @@ export default {
 
   components: { Multiselect },
 
-  props: ["type", "id"],
+  props: ["type", "id", "targetChar"],
 
   firebase: {
     chars: charsRef,
@@ -337,6 +337,10 @@ export default {
       this.$set(self.currentData, "runes", []);
       this.$set(self.currentData, "sets", []);
       this.$set(self.currentData, "stats", []);
+
+      if (this.type === "roster" && this.targetChar) {
+        this.currentData.char = this.targetChar;
+      }
     } else if (this.id) {
       db
         .ref("usr_" + this.type)
@@ -346,9 +350,9 @@ export default {
           self.currentData = snapshot.val();
           self.key = snapshot.key;
 
-          if(!self.currentData.runes) self.$set(self.currentData, "runes", []);
-          if(!self.currentData.sets) self.$set(self.currentData, "sets", []);
-          if(!self.currentData.stats) self.$set(self.currentData, "stats", []);
+          if (!self.currentData.runes) self.$set(self.currentData, "runes", []);
+          if (!self.currentData.sets) self.$set(self.currentData, "sets", []);
+          if (!self.currentData.stats) self.$set(self.currentData, "stats", []);
         });
     }
   },

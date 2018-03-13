@@ -33,7 +33,7 @@ export default {
 
   data() {
     return {
-      hasLoaded: false,
+      hasLoaded: false
     };
   },
 
@@ -45,30 +45,33 @@ export default {
 
   mounted() {
     // Initialize Auth
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          let initUser = {};
-          // initUser.firebase = user
-          initUser.email = user.email;
-          initUser.key = user.uid;
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        let initUser = {};
+        // initUser.firebase = user
+        initUser.email = user.email;
+        initUser.key = user.uid;
 
-          usersRef
-            .child(user.uid)
-            .once("value")
-            .then(function(snapshot) {
-              initUser = Object.assign({}, initUser, snapshot.val());
-              return initUser;
-            })
-            .then(initUser => {
-              this.user = initUser;
-              this.hasLoaded = true
-            });
-        } else {
-          this.user = null
-        }
-      });
+        usersRef
+          .child(user.uid)
+          .once("value")
+          .then(function(snapshot) {
+            initUser = Object.assign({}, initUser, snapshot.val());
+            return initUser;
+          })
+          .then(initUser => {
+            this.user = initUser;
+            this.hasLoaded = true;
+          });
+      } else {
+        this.user = null;
+      }
+    });
+  },
+
+  beforeMount: function() {
+    document.title = "Big Amp";
   }
-
 };
 </script>
 <style>
