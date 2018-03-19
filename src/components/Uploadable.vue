@@ -1,6 +1,6 @@
 <template>
   <div class="uploadable">
-    <input class="form-control" v-model="inputValue"/>
+    <input class="form-control" v-model="inputValue" />
     <button type="button" class="btn btn-default" @click="onPickFile">Pick</button>
     <button v-if="fileUrl && changed" type="button" class="btn btn-default" @click="uploadData">Upload</button>
     <input id="uploadable-form" @change="onFilePicked" type="file" ref="fileInput" accept="image/*">
@@ -23,7 +23,7 @@ export default {
 
   data() {
     return {
-      fileUrl: '',
+      fileUrl: "",
       changed: false,
       file: null
     };
@@ -67,7 +67,7 @@ export default {
         .put(this.file)
         .then(fileData => {
           this.fileUrl = fileData.metadata.downloadURLs[0];
-          this.inputValue = this.fileUrl
+          this.inputValue = this.fileUrl;
 
           toastr.success("File uploaded successfully");
         });
@@ -82,7 +82,7 @@ export default {
       set(newValue) {
         this.$emit("input", newValue);
       }
-    }
+    },
   }
 };
 </script>

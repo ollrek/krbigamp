@@ -88,7 +88,8 @@ export default {
           .then(user => {
             // Nothing
               usersRef.child(user.uid).set({
-                  role: 4 // User role
+                  role: 1000,
+                  mail: this.email, // User role
               })
           })
           .catch(error => {

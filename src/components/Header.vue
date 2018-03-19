@@ -15,7 +15,7 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="">
+                    <li v-if="user && user.role < 99" class="">
                         <a href="/#/admin">Admin</a>
                     </li>
                     <li class="">

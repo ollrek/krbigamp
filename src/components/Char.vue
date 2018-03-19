@@ -236,9 +236,9 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="transMenu">
-                    <template v-for="i in 4">
+                    <template v-for="i in 5">
                         <li class="dropdown-header">Tier {{i}}</li>
-                        <li :class="{ 'active' : i === 1 && j === 1 }" v-for="j in 4">
+                        <li  v-if="!(i === 5 && j > 2)" :class="{ 'active' : i === 1 && j === 1 }" v-for="j in 4">
                             <a v-on:click="dropdownProcess($event)" :href="'#t'+i+'-'+j" data-toggle="tab">Perk {{i}}-{{j}}</a>
                         </li>
                     </template>
@@ -246,8 +246,8 @@
             </div>
 
             <div class="tab-content clearfix">
-                <template v-for="i in 4">
-                    <div :class="{ 'active' : i === 1 && j === 1 }" v-for="j in 4" class="tab-pane" :id="'t'+i+'-'+j">
+                <template v-for="i in 5">
+                    <div v-if="!(i === 5 && j > 2)" :class="{ 'active' : i === 1 && j === 1 }" v-for="j in 4" class="tab-pane" :id="'t'+i+'-'+j" :key="'t'+i+'-'+j">
                         <div class="form-group">
                             <label v-bind:for="'charTrans.t'+i+'-'+j+'.name'" class="col-sm-1 control-label">Name</label>
                             <div class="col-sm-5">

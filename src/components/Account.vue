@@ -387,6 +387,8 @@ export default {
 .customs-list-small .user-avatar img {
   border-radius: 50%;
   border: 0;
+  min-width: 48px;
+  min-height: 48px;
 }
 
 .customs-list-small .user-name {

@@ -7,20 +7,84 @@
         </button>
         <!-- Template -->
         <div v-if="!isEditing" class="custom-container">
-            <h1 class="title">{{currentData.title}}</h1>
-            <!-- <div class="user-img" v-if="currentData.img">
-                <img :src="currentData.img" />
-            </div> -->
+            <h1 class="custom-title">
+                {{currentData.title}}
+            </h1>
+            <div class="custom-img" v-if="currentChar">
+                <img :src="currentChar.img" />
+            </div>
             <div class="info-container">
                 <div class="row">
                     <div class="col-md-2">
                         <strong>
-                            <span v-if="type === 'builds'">Recommended</span> UW</strong>
+                            <span v-if="type === 'builds'">Recommended</span> UW
+                        </strong>
                     </div>
                     <div class="col-md-3">
-                        {{currentData.uw === '0' ? 'No' : currentData.uw}}
+                        {{currentData.uw === '-1' ? 'No' : currentData.uw + '*'}}
                     </div>
-                    <!-- <div class="col-md-2">
+                    <div class="col-md-2 col-md-offset-1">
+                        <strong>
+                            <span v-if="type === 'builds'">Recommended</span> UW
+                        </strong>
+                    </div>
+                    <div class="col-md-3">
+                        {{currentData.uw === '-1' ? 'No' : currentData.uw + '*'}}
+                    </div>
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Runes</h4>
+                        <ul class="custom-runes">
+                            <li v-for="elt in Object.keys(runesRef)" :key="elt">
+                                <img style="vertical-align:middle" :src="require('../assets/icons/runes/'+ elt+'.png')">
+                                <span class="text-capitalize">
+                                    <strong>{{elt}}</strong>
+                                </span>
+                                <span v-for="(r, index) in currentData.runes" v-if="elt === r.type" :key="index">{{r.value}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 custom-gear">
+                        <h4>Gear</h4>
+                        <!-- <ul class="custom-runes">
+                            <li v-for="elt in Object.keys(runesRef)" :key="elt"> -->
+                        <!-- <img style="vertical-align:middle" :src="require('../assets/icons/runes/'+ elt+'.png')"> -->
+                        <div class="custom-acc">
+                            <span class="text-capitalize">
+                                {{currentData.acc}}
+                            </span>
+                        </div>
+                        <div class="custom-sets">
+                            <ul>
+                                <li v-for="(s, index) in currentData.sets" :key="index">
+                                    <!-- <img style="vertical-align:middle" :src="require('../assets/icons/runes/'+ elt+'.png')"> -->
+                                    <span class="text-capitalize">
+                                        {{s.type}} <strong>{{s.value}}p</strong>
+                                    </span>
+                                    <!-- <span v-for="(r, index) in currentData.runes" v-if="elt === r.type" :key="index">{{r.value}}</span> -->
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <span v-for="(r, index) in currentData.runes" v-if="elt === r.type" :key="index">{{r.value}}</span> -->
+                        <!-- </li>
+                        </ul> -->
+                    </div>
+                    <div class="col-md-4 custom-artifact">
+                        <h4>Artifact</h4>
+                        <!-- <ul class="custom-runes">
+                            <li v-for="elt in Object.keys(runesRef)" :key="elt"> -->
+                        <img style="vertical-align:middle" v-if="currentArtifact" :src="currentArtifact.img">
+                        <span>
+                            {{currentData.artifact}}
+                        </span>
+                        <!-- <span v-for="(r, index) in currentData.runes" v-if="elt === r.type" :key="index">{{r.value}}</span> -->
+                        <!-- </li>
+                        </ul> -->
+                    </div>
+                </div>
+                <!-- <div class="col-md-2">
                         <strong>Guild</strong>
                     </div>
                     <div class="col-md-3">{{currentData.guild}}</div>
@@ -34,7 +98,7 @@
                     <div class="col-md-3">
                         <a :href="'/#/char/' + currentData.waifu">{{currentData.waifu}}</a>
                     </div> -->
-                </div>
+
             </div>
         </div>
         <!-- Editing -->
@@ -42,7 +106,7 @@
             <div class="form-group">
                 <label for="customTitle" class="col-sm-2 control-label">Title</label>
                 <div class="col-sm-5">
-                    <span :disabled="true" v-if="type === 'roster'" class="form-control">{{user.pseudo || user.email}}'s {{currentData.char}}</span>
+                    <span :disabled="true" v-if="type === 'roster'" class="form-control">{{currentData.title}}</span>
                     <input v-else type="text" id="customTitle" class="form-control" v-model="currentData.title">
                 </div>
             </div>
@@ -59,8 +123,8 @@
                     <span v-if="type === 'builds'">Recommended</span> UW</label>
                 <div class="col-sm-5">
                     <select id="customUW" class="form-control" v-model="currentData.uw">
-                        <option value="0">No</option>
-                        <option v-for="c in 5" :value="c" :key="c">{{c}}*</option>
+                        <option value="-1">No</option>
+                        <option v-for="c in 6" :value="c-1" :key="c-1">{{c-1}}*</option>
                     </select>
                 </div>
             </div>
@@ -308,6 +372,20 @@ export default {
           this.$lodash.partialRight(this.$lodash.pick, "name")
         );
       }
+    },
+    currentChar() {
+      return this.currentData.char
+        ? this.chars.find(char => {
+            return char.name === this.currentData.char;
+          })
+        : null;
+    },
+    currentArtifact() {
+      return this.currentData.artifact
+        ? this.artifactTags.find(art => {
+            return art.name === this.currentData.artifact;
+          })
+        : null;
     }
   },
 
@@ -340,6 +418,8 @@ export default {
 
       if (this.type === "roster" && this.targetChar) {
         this.currentData.char = this.targetChar;
+        this.currentData.title =
+          (this.user.pseudo || this.user.email) + "'s " + this.currentData.char;
       }
     } else if (this.id) {
       db
@@ -401,6 +481,39 @@ li {
 .trans-perk.active {
   -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
+}
+
+.info-container {
+  margin: 10px 0;
+}
+
+.custom-runes, .custom-gear ul {
+  padding: 0;
+}
+
+.custom-gear .custom-acc {
+    margin-bottom: 10px;
+    line-height: 32px;
+}
+
+.custom-runes li {
+  margin-bottom: 5px;
+}
+
+.custom-runes img,
+.custom-artifact img {
+  margin-right: 15px;
+  max-height: 32px;
+  max-width: 32px;
+}
+
+.custom-runes li span {
+  margin-right: 5px;
+}
+
+.custom-runes li span.text-capitalize {
+  display: inline-block;
+  min-width: 60px;
 }
 </style>
 
