@@ -141,14 +141,15 @@ export default {
     changes: changesRef,
     users: usersRef,
     charTags: charTagsRef,
-    contentTags: contentTagsRef,
+    contentTags: contentTagsRef
   },
 
   store: ["user"],
 
   data() {
     return {
-      newCharTag: ""
+      newCharTag: "",
+      newContentTag: ""
     };
   },
 
@@ -170,9 +171,7 @@ export default {
         .remove();
     },
     addElt: function(target, elt) {
-      db
-        .ref("db_" + target)
-        .push({name: elt});
+      db.ref("db_" + target).push({ name: elt });
       elt = "";
     },
     beautifyDiff(diff, target) {
@@ -185,7 +184,7 @@ export default {
             "<small><u>" +
             diff.path.join(" ") +
             "</u></small> " +
-            (diff.lhs || diff.item.lhs || "");
+            (diff.lhs || (diff.item && diff.item.lhs) || "");
           break;
         case "to":
           text +=
@@ -194,7 +193,7 @@ export default {
             " </strong><small><u>" +
             diff.path.join(" ") +
             ' </u></small> <i class="glyphicon glyphicon-arrow-right"></i> ' +
-            (diff.rhs || diff.item.rhs || "");
+            (diff.rhs || (diff.item && diff.item.rhs) || "");
           break;
       }
 

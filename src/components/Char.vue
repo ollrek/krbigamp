@@ -44,6 +44,14 @@
                         <a :href="'#/item/' + weapon.name">{{weapon.name}}</a>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <strong>Unique Treasure</strong>
+                    </div>
+                    <div class="col-md-5">
+                        <a :href="'#/item/' + treasure.name">{{treasure.name}}</a>
+                    </div>
+                </div>
                 <div v-if="currentData.tags" class="row">
                     <div class="col-md-2">
                         <strong>Tags</strong>
@@ -238,7 +246,7 @@
                 <ul class="dropdown-menu" aria-labelledby="transMenu">
                     <template v-for="i in 5">
                         <li class="dropdown-header">Tier {{i}}</li>
-                        <li  v-if="!(i === 5 && j > 2)" :class="{ 'active' : i === 1 && j === 1 }" v-for="j in 4">
+                        <li v-if="!(i === 5 && j > 2)" :class="{ 'active' : i === 1 && j === 1 }" v-for="j in 4">
                             <a v-on:click="dropdownProcess($event)" :href="'#t'+i+'-'+j" data-toggle="tab">Perk {{i}}-{{j}}</a>
                         </li>
                     </template>
@@ -311,6 +319,7 @@ export default {
     return {
       target: "db_chars",
       weapon: {},
+      treasure: {},
       positions: ["Front", "Middle", "Back"],
       damageTypes: ["Magical", "Physical"],
       flatChar: {
@@ -392,9 +401,18 @@ export default {
     itemsRef
       .orderByChild("char")
       .equalTo(this.name)
-      .once("value", function(snapshot) {
+      .on("value", function(snapshot) {
         snapshot.forEach(function(child) {
-          self.weapon = child.val();
+          const item = child.val();
+
+          switch (item.type) {
+            case "Treasure":
+              self.treasure = item;
+              break;
+            case "Unique Weapon":
+              self.weapon = item;
+              break;
+          }
         });
       });
   },

@@ -65,7 +65,7 @@
           <div class="form-group">
             <label for="itemImg" class="col-sm-1 control-label">Image</label>
             <div class="col-sm-11">
-              <uploadable v-model="currentData.img" :parent-key="currentData.key" :prefix="item" db-ref="items"></uploadable>
+              <uploadable v-model="currentData.img" :parent-key="currentData.key" :prefix="currentData.type || 'item'" db-ref="items"></uploadable>
             </div>
           </div>
           <div class="form-group">
@@ -92,7 +92,7 @@ let itemsRef = db.ref("db_items");
 let charsRef = db.ref("db_chars");
 
 // Vars
-let type = ["Unique Weapon", "Artifact"];
+let type = ["Unique Weapon", "Artifact", "Treasure"];
 
 export default {
   name: "Item",

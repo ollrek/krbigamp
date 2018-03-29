@@ -82,7 +82,7 @@ import { itemMixin } from '../mixins/item'
 let db = firebase.database();
 let itemsRef = db.ref("db_items");
 let charsRef = db.ref("db_chars");
-let type = ["Unique Weapon", "Artifact"];
+let type = ["Unique Weapon", "Artifact", "Treasure"];
 
 export default {
   name: "ItemList",
