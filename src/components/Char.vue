@@ -109,6 +109,9 @@
                     </div>
                 </div>
             </div>
+            <hr/>
+            <h3>Tips</h3>
+            <Commentable :id="currentData.key" db-ref="chars" />
         </div>
         <!-- Editing -->
         <div class="form-horizontal" v-else>
@@ -291,6 +294,7 @@ import firebase from "firebase";
 import tippy from "tippy.js";
 import Multiselect from "vue-multiselect";
 import Uploadable from "./Uploadable.vue";
+import Commentable from "./Commentable.vue";
 import { editableMixin } from "../mixins/editable";
 
 // DB Refs initialize
@@ -305,7 +309,7 @@ export default {
 
   mixins: [editableMixin],
 
-  components: { Multiselect, Uploadable },
+  components: { Multiselect, Uploadable, Commentable },
 
   props: ["name"],
 

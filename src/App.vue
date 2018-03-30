@@ -4,12 +4,16 @@
       <Header/>
     </div>
     <router-view />
+    <div class="page-footer">
+      <Footer/>
+    </div>
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import store from "./store";
 
@@ -40,7 +44,8 @@ export default {
   methods: {},
 
   components: {
-    Header
+    Header,
+    Footer
   },
 
   mounted() {

@@ -25,11 +25,11 @@
                     </div>
                     <div class="col-md-2 col-md-offset-1">
                         <strong>
-                            <span v-if="type === 'builds'">Recommended</span> UW
+                            <span v-if="type === 'builds'">Recommended</span> Treasure
                         </strong>
                     </div>
                     <div class="col-md-3">
-                        {{currentData.uw === '-1' ? 'No' : currentData.uw + '*'}}
+                        {{currentData.treasure === '-1' ? 'Common' : currentData.treasure + '*'}}
                     </div>
                 </div>
                 <hr/>
@@ -124,6 +124,16 @@
                 <div class="col-sm-5">
                     <select id="customUW" class="form-control" v-model="currentData.uw">
                         <option value="-1">No</option>
+                        <option v-for="c in 6" :value="c-1" :key="c-1">{{c-1}}*</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="customTreasure" class="col-sm-2 control-label">
+                    <span v-if="type === 'builds'">Recommended</span> Treasure</label>
+                <div class="col-sm-5">
+                    <select id="customTreasure" class="form-control" v-model="currentData.treasure">
+                        <option value="-1">Common</option>
                         <option v-for="c in 6" :value="c-1" :key="c-1">{{c-1}}*</option>
                     </select>
                 </div>
