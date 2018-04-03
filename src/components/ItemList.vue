@@ -61,7 +61,7 @@
           </thead>
           <tbody>
             <tr v-for="item in items">
-              <td><a :href="'#/item/' + item.name">{{item.name}}</a></td>
+              <td><a :href="'#/item/' + item.slugName">{{item.name}}</a></td>
               <td>{{item.type}}</td>
               <td v-html="processText(item)"></td>
               <td>{{item.char}}</td>

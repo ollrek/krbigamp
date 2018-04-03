@@ -10,7 +10,7 @@
       <div v-if="!isEditing" class="item-container">
         <h1 class="title">{{currentData.name}}
           <small>
-            <a :href="'#/char/' + currentData.char">{{currentData.char}}</a>
+            <a v-if="currentData.char" :href="'#/char/' + $tools.slugify(currentData.char)">{{currentData.char}}</a>
           </small>
         </h1>
         <span class="">{{currentData.type}}</span>
@@ -121,7 +121,7 @@ export default {
     let self = this;
 
     itemsRef
-      .orderByChild("name")
+      .orderByChild("slugName")
       .equalTo(this.name)
       .once("value", function(snapshot) {
         snapshot.forEach(function(child) {

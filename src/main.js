@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import VueFire from 'vuefire'
 import lodash from 'lodash'
+import tools from './tools'
 
 // App
 import App from './App'
@@ -21,6 +22,10 @@ Vue.use(VueStash)
 
 // Lodash
 Object.defineProperty(Vue.prototype, '$lodash', { value: lodash })
+
+// Tools
+console.log(lodash, tools)
+Object.defineProperty(Vue.prototype, '$tools', { value: tools })
 
 /* eslint-disable no-new */
 new Vue({

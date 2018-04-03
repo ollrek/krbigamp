@@ -41,7 +41,7 @@
                         <strong>Unique Weapon</strong>
                     </div>
                     <div class="col-md-5">
-                        <a :href="'#/item/' + weapon.name">{{weapon.name}}</a>
+                        <a v-if="weapon.name" :href="'#/item/' + weapon.slugName">{{weapon.name}}</a>
                     </div>
                 </div>
                 <div class="row">
@@ -49,7 +49,7 @@
                         <strong>Unique Treasure</strong>
                     </div>
                     <div class="col-md-5">
-                        <a :href="'#/item/' + treasure.name">{{treasure.name}}</a>
+                        <a v-if="treasure.name" :href="'#/item/' + treasure.slugName">{{treasure.name}}</a>
                     </div>
                 </div>
                 <div v-if="currentData.tags" class="row">
@@ -393,30 +393,30 @@ export default {
     let self = this;
 
     charsRef
-      .orderByChild("name")
+      .orderByChild("slugName")
       .equalTo(this.name)
       .once("value", function(snapshot) {
         snapshot.forEach(function(child) {
           self.currentData = self.$lodash.merge({}, self.flatChar, child.val());
           self.currentData.key = child.key;
-        });
-      });
 
-    itemsRef
-      .orderByChild("char")
-      .equalTo(this.name)
-      .on("value", function(snapshot) {
-        snapshot.forEach(function(child) {
-          const item = child.val();
+          itemsRef
+            .orderByChild("char")
+            .equalTo(self.currentData.name)
+            .on("value", function(snapshot) {
+              snapshot.forEach(function(child) {
+                const item = child.val();
 
-          switch (item.type) {
-            case "Treasure":
-              self.treasure = item;
-              break;
-            case "Unique Weapon":
-              self.weapon = item;
-              break;
-          }
+                switch (item.type) {
+                  case "Treasure":
+                    self.treasure = item;
+                    break;
+                  case "Unique Weapon":
+                    self.weapon = item;
+                    break;
+                }
+              });
+            });
         });
       });
   },

@@ -45,7 +45,7 @@
           <tbody>
             <tr v-for="char in chars">
               <td>
-                <a :href="'#/char/' + char.name">{{char.name}}</a>
+                <a :href="'#/char/' + char.slugName">{{char.name}}</a>
               </td>
               <td>{{char.class.name}} <img class="class-img" :src="char.class.image"/></td>
               <td>{{char.star}}</td>
