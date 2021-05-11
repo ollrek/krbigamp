@@ -1,6 +1,6 @@
 # kings-raid-db
 
-> A Vue.js project
+> A Vue.js project to cather data and guides for Vespa's King's Raid
 
 ## Build Setup
 
